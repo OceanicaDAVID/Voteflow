@@ -1,0 +1,22 @@
+# Database Connection
+# For local development, you can use a local postgres instance
+DATABASE_URL="postgresql://postgres:password@localhost:5432/voteflow"
+
+# NextAuth Configuration
+# Generate a secret with: openssl rand -base64 32
+NEXTAUTH_SECRET="your-secret-key-here"
+NEXTAUTH_URL="http://localhost:3000"
+
+# OAuth Providers (Get these from the respective developer portals)
+GOOGLE_CLIENT_ID=""
+GOOGLE_CLIENT_SECRET=""
+
+APPLE_ID=""
+APPLE_SECRET=""
+
+TWITTER_CLIENT_ID=""
+TWITTER_CLIENT_SECRET=""
+
+INSTAGRAM_CLIENT_ID=""
+INSTAGRAM_CLIENT_SECRET=""
+

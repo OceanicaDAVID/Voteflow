@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoteFlow Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        border: "hsl(214.3 31.8% 91.4%)",
+                        input: "hsl(214.3 31.8% 91.4%)",
+                        ring: "hsl(222.2 84% 4.9%)",
+                        background: "#f8fafc", // Slate-50
+                        foreground: "#0f172a", // Slate-900
+                        primary: {
+                            DEFAULT: "#0f172a",
+                            foreground: "#f8fafc",
+                        },
+                        secondary: {
+                            DEFAULT: "#f1f5f9", // Slate-100
+                            foreground: "#0f172a",
+                        },
+                        destructive: {
+                            DEFAULT: "hsl(0 84.2% 60.2%)",
+                            foreground: "hsl(210 40% 98%)",
+                        },
+                        muted: {
+                            DEFAULT: "#f1f5f9",
+                            foreground: "#64748b", // Slate-500
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-background text-foreground min-h-screen">
+
+    <div class="container mx-auto flex min-h-screen max-w-7xl bg-white shadow-xl min-h-screen">
+        
+        <!-- Left Sidebar (Rebranded) -->
+        <div class="hidden w-20 flex-none border-r border-slate-200 md:flex xl:w-72 flex-col justify-between py-6 bg-white z-20">
+            <div class="flex flex-col gap-6">
+                <div class="px-6 flex items-center gap-3 text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><path d="M5 7c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v12H5V7Z"/><path d="M22 19H2"/></svg>
+                    <h1 class="text-2xl font-extrabold tracking-tight hidden xl:block">VoteFlow</h1>
+                </div>
+                
+                <nav class="flex flex-col gap-2 px-4">
+                    <a href="#" class="flex items-center gap-4 rounded-lg px-4 py-3 text-lg font-medium bg-slate-100 text-primary transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        <span class="hidden xl:inline">Feed</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-4 rounded-lg px-4 py-3 text-lg font-medium text-slate-600 hover:bg-slate-50 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                        <span class="hidden xl:inline">Discover</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-4 rounded-lg px-4 py-3 text-lg font-medium text-slate-600 hover:bg-slate-50 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                        <span class="hidden xl:inline">Alerts</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-4 rounded-lg px-4 py-3 text-lg font-medium text-slate-600 hover:bg-slate-50 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        <span class="hidden xl:inline">My Profile</span>
+                    </a>
+                </nav>
+                
+                <div class="px-4">
+                    <button class="w-full rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 text-lg py-4 font-bold shadow-lg hover:shadow-xl transition-all flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="xl:hidden"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+                        <span class="hidden xl:inline">New Vote</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="px-4">
+                <div class="flex items-center gap-3 rounded-lg p-3 hover:bg-slate-50 cursor-pointer border border-transparent hover:border-slate-200 transition-all">
+                    <div class="h-10 w-10 rounded-full bg-slate-200 overflow-hidden flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <div class="hidden xl:block overflow-hidden">
+                        <p class="font-bold text-sm truncate">Demo User</p>
+                        <p class="text-slate-500 text-xs truncate">@demouser</p>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-auto text-slate-400 hidden xl:block"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="flex w-full min-w-0 flex-1 flex-col border-r border-slate-200 ml-20 xl:ml-72">
+            <div class="sticky top-0 z-10 border-b border-slate-200 bg-white/80 px-4 py-3 backdrop-blur-md">
+                <h1 class="text-xl font-bold mb-2">Home</h1>
+                
+                <!-- Tabs -->
+                <div class="flex w-full border-b border-slate-200">
+                    <div class="flex-1 py-3 text-center font-bold text-primary border-b-2 border-primary cursor-pointer">
+                        Polls
+                    </div>
+                    <div class="flex-1 py-3 text-center font-medium text-slate-500 hover:bg-slate-50 cursor-pointer">
+                        Posts
+                    </div>
+                </div>
+            </div>
+
+            <!-- Create Post Area -->
+            <div class="border-b border-slate-200 p-4 bg-white">
+                <div class="flex gap-4">
+                    <div class="h-10 w-10 rounded-full bg-slate-200 overflow-hidden flex-shrink-0 flex items-center justify-center">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <div class="flex-1">
+                        <textarea placeholder="What's on your mind?" class="flex min-h-[80px] w-full rounded-md border-none bg-transparent px-0 py-2 text-xl placeholder:text-slate-400 focus:outline-none resize-none"></textarea>
+                        
+                        <div class="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
+                            <div class="flex gap-2 text-primary">
+                                <button class="p-2 hover:bg-slate-100 rounded-full text-primary"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></button>
+                                <button class="p-2 hover:bg-slate-100 rounded-full text-primary"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg></button>
+                            </div>
+                            <button class="bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 rounded-full font-bold transition-all">
+                                Post
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feed -->
+            <div class="flex flex-col bg-white">
+                
+                <!-- Post Item 1 (With Poll & Tip) -->
+                <div class="border-b border-slate-200 p-4 hover:bg-slate-50 transition-colors cursor-pointer relative group">
+                    <!-- More Menu -->
+                    <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button class="p-2 hover:bg-slate-200 rounded-full text-slate-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                        </button>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600">C</div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 justify-between pr-8">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-bold hover:underline text-slate-900">CryptoDaily</span>
+                                    <span class="text-slate-500 text-sm">@cryptodaily</span>
+                                    <span class="text-slate-500 text-sm">·</span>
+                                    <span class="text-slate-500 text-sm hover:underline">2h</span>
+                                </div>
+                                <button class="text-primary hover:bg-slate-100 px-2 py-1 rounded-full text-xs font-bold border border-slate-200 flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" x2="20" y1="8" y2="14"/><line x1="23" x2="17" y1="11" y2="11"/></svg>
+                                    Follow
+                                </button>
+                            </div>
+                            
+                            <div class="mt-2 text-base text-slate-800">Which L2 solution do you prefer? ⛓️</div>
+
+                            <!-- Poll Display -->
+                            <div class="mt-3 flex flex-col gap-2">
+                                <div class="relative h-9 w-full rounded-md bg-slate-100 overflow-hidden flex items-center px-3 border border-slate-200">
+                                    <div class="absolute left-0 top-0 h-full bg-blue-100" style="width: 60%"></div>
+                                    <div class="relative z-10 flex w-full justify-between text-sm font-medium text-slate-700">
+                                        <span>Arbitrum (You)</span>
+                                        <span>60%</span>
+                                    </div>
+                                </div>
+                                <div class="relative h-9 w-full rounded-md bg-slate-100 overflow-hidden flex items-center px-3 border border-slate-200">
+                                    <div class="absolute left-0 top-0 h-full bg-slate-200" style="width: 40%"></div>
+                                    <div class="relative z-10 flex w-full justify-between text-sm font-medium text-slate-700">
+                                        <span>Optimism</span>
+                                        <span>40%</span>
+                                    </div>
+                                </div>
+                                <div class="mt-1 text-xs text-slate-500">
+                                    2,420 votes · Final results
+                                </div>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="mt-3 flex justify-between text-slate-500 max-w-md">
+                                <button class="hover:text-blue-500 hover:bg-blue-50 rounded-full p-2 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
+                                <button class="hover:text-green-500 hover:bg-green-50 rounded-full p-2 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></button>
+                                <button class="hover:text-pink-500 hover:bg-pink-50 rounded-full p-2 transition-colors flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                                    <span class="text-xs">124</span>
+                                </button>
+                                
+                                <!-- Tip Button (New) -->
+                                <button class="text-yellow-600 hover:bg-yellow-50 rounded-full p-2 transition-colors relative group/tip" onclick="document.getElementById('tip-modal').classList.remove('hidden')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>
+                                </button>
+
+                                <div class="flex items-center gap-1 text-xs hover:text-blue-500 cursor-default">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
+                                    <span>1.2K</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Right Section -->
+        <div class="hidden w-80 flex-none lg:block border-l border-slate-200 bg-white">
+            <div class="flex flex-col gap-4 py-4 pl-4 fixed w-80">
+                <div class="relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-3 text-slate-400"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <input class="flex h-10 w-full rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 pl-10" placeholder="Search VoteFlow">
+                </div>
+                
+                <div class="rounded-xl bg-slate-50 p-4 border border-slate-100">
+                    <h2 class="mb-4 text-lg font-bold text-slate-900">Trending Polls</h2>
+                    <div class="flex flex-col gap-4">
+                        <div class="cursor-pointer hover:bg-slate-100 p-2 rounded-md -mx-2 transition-colors">
+                            <p class="text-xs text-slate-500">Technology</p>
+                            <p class="font-bold text-slate-800">#AIvsHuman</p>
+                            <p class="text-xs text-slate-500">50.4K votes</p>
+                        </div>
+                        <div class="cursor-pointer hover:bg-slate-100 p-2 rounded-md -mx-2 transition-colors">
+                            <p class="text-xs text-slate-500">Politics</p>
+                            <p class="font-bold text-slate-800">#Election2024</p>
+                            <p class="text-xs text-slate-500">120K votes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Auth Overlay (Simulating Guest Access) -->
+    <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-transparent">
+      <div class="w-full max-w-md space-y-6 rounded-xl bg-white p-8 shadow-2xl border border-gray-200 relative animate-in fade-in zoom-in duration-300 ring-1 ring-black/5">
+        
+        <div class="text-center">
+            <h2 class="text-2xl font-bold tracking-tight text-slate-900">
+                Join VoteFlow Today
+            </h2>
+            <p class="text-sm text-slate-500 mt-2">
+                See what people are voting on right now.
+            </p>
+        </div>
+
+        <div class="space-y-3">
+            <button class="w-full relative flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors bg-white text-slate-700 font-medium">
+            <svg class="mr-2 h-4 w-4" viewBox="0 0 24 24">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            Continue with Google
+            </button>
+            <button class="w-full relative flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors bg-white text-slate-700 font-medium">
+            <svg class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.74s2.57-.99 3.87-.82c.69.03 2.29.32 3.4 1.92-3.03 1.58-2.49 5.4 1.01 6.84-.63 1.52-1.68 3.12-3.36 4.29zm-2.11-13.75c.6-1.18 1.96-2.14 3.38-1.43.13 1.52-.98 3.06-2.7 3.06-1.06-.03-2.26-1.1-1.45-3.24z"/></svg>
+            Continue with Apple
+            </button>
+        </div>
+
+        <div class="relative">
+            <div class="absolute inset-0 flex items-center">
+                <span class="w-full border-t border-gray-200" />
+            </div>
+            <div class="relative flex justify-center text-xs uppercase">
+                <span class="bg-white px-2 text-slate-500">
+                or
+                </span>
+            </div>
+        </div>
+
+        <form class="space-y-4">
+            <input 
+                type="email" 
+                placeholder="Email address" 
+                class="flex h-10 w-full rounded-md border border-slate-300 bg-transparent px-3 py-2 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+            />
+            <input 
+                type="password" 
+                placeholder="Password" 
+                class="flex h-10 w-full rounded-md border border-slate-300 bg-transparent px-3 py-2 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+            />
+            
+            <button class="w-full rounded-full font-bold text-md h-11 bg-slate-900 text-white hover:bg-slate-800 transition-colors">
+                Create Account
+            </button>
+        </form>
+
+        <div class="text-center text-sm">
+            <p class="text-slate-500">
+            Already have an account? 
+            <a href="#" class="font-semibold text-slate-900 hover:underline">
+                Sign in
+            </a>
+            </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tip Modal (Static Simulation) -->
+    <div id="tip-modal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6 m-4 animate-in fade-in zoom-in duration-200">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold">Tip @cryptodaily</h3>
+                <button onclick="document.getElementById('tip-modal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                </button>
+            </div>
+            <p class="text-sm text-slate-500 mb-4">Support this creator by sending crypto to their wallet address.</p>
+            
+            <div class="space-y-4">
+                <div class="p-3 bg-slate-50 rounded-md border border-slate-200">
+                    <div class="flex justify-between text-xs font-bold text-slate-500 mb-1">
+                        <span>ETHEREUM (ERC20)</span>
+                        <span class="text-green-600 cursor-pointer">Copy</span>
+                    </div>
+                    <p class="font-mono text-sm break-all text-slate-800">0x71C7656EC7ab88b098defB751B7401B5f6d8976F</p>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-md border border-slate-200">
+                    <div class="flex justify-between text-xs font-bold text-slate-500 mb-1">
+                        <span>SOLANA</span>
+                        <span class="text-green-600 cursor-pointer">Copy</span>
+                    </div>
+                    <p class="font-mono text-sm break-all text-slate-800">HN7cABqLq46Es1jh92dQQisAq662SmxELLLsHHe4YWrH</p>
+                </div>
+            </div>
+
+            <div class="mt-6 text-center">
+                <button onclick="document.getElementById('tip-modal').classList.add('hidden')" class="w-full bg-slate-900 text-white rounded-md py-2 font-medium hover:bg-slate-800">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white/80 backdrop-blur-md md:hidden">
+        <nav class="flex justify-around items-center h-16">
+            <a href="#" class="flex flex-col items-center justify-center w-full h-full text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span class="text-[10px] mt-1 font-medium">Home</span>
+            </a>
+            <a href="#" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                <span class="text-[10px] mt-1 font-medium">Discover</span>
+            </a>
+            <a href="#" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                <span class="text-[10px] mt-1 font-medium">Alerts</span>
+            </a>
+            <a href="#" class="flex flex-col items-center justify-center w-full h-full text-slate-500 hover:text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span class="text-[10px] mt-1 font-medium">Profile</span>
+            </a>
+        </nav>
+    </div>
+
+</body>
+</html>

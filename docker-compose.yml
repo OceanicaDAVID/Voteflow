@@ -1,0 +1,28 @@
+version: '3'
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: xvote
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://postgres:password@db:5432/xvote?schema=public
+      NEXTAUTH_SECRET: supersecretkey
+      NEXTAUTH_URL: http://localhost:3000
+    depends_on:
+      - db
+    restart: always
+
+volumes:
+  db_data:
+

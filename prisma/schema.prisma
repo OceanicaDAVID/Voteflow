@@ -1,0 +1,164 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  MODERATOR
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          UserRole  @default(USER) // Added Role-Based Access Control
+  walletAddress String?   // For crypto tipping
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  posts         Post[]
+  votes         Vote[]
+  likes         Like[]
+  followedBy    Follows[] @relation("following")
+  following     Follows[] @relation("follower")
+  blockedBy     Block[]   @relation("blocked")
+  blocking      Block[]   @relation("blocker")
+  sentTips      Tip[]     @relation("sender")
+  receivedTips  Tip[]     @relation("receiver")
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  content   String
+  images    String[] // URLs to images/videos
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  views     Int      @default(0)
+  poll      Poll?
+  likes     Like[]
+  tips      Tip[]
+}
+
+model Poll {
+  id        String   @id @default(cuid())
+  question  String
+  postId    String   @unique
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  options   Option[]
+  votes     Vote[]
+  createdAt DateTime @default(now())
+  expiresAt DateTime?
+}
+
+model Option {
+  id        String   @id @default(cuid())
+  text      String
+  pollId    String
+  poll      Poll     @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  votes     Vote[]
+}
+
+model Vote {
+  id        String   @id @default(cuid())
+  userId    String
+  pollId    String
+  optionId  String
+  user      User     @relation(fields: [userId], references: [id])
+  poll      Poll     @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  option    Option   @relation(fields: [optionId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, pollId])
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  userId    String
+  postId    String
+  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+}
+
+model Follows {
+  followerId  String
+  followingId String
+  follower    User   @relation("follower", fields: [followerId], references: [id])
+  following   User   @relation("following", fields: [followingId], references: [id])
+
+  @@id([followerId, followingId])
+}
+
+model Block {
+  blockerId   String
+  blockedId   String
+  blocker     User   @relation("blocker", fields: [blockerId], references: [id])
+  blocked     User   @relation("blocked", fields: [blockedId], references: [id])
+
+  @@id([blockerId, blockedId])
+}
+
+model Tip {
+  id          String   @id @default(cuid())
+  senderId    String
+  receiverId  String
+  postId      String?
+  amount      Float
+  currency    String   @default("ETH")
+  txHash      String?  // Blockchain transaction hash
+  createdAt   DateTime @default(now())
+
+  sender      User     @relation("sender", fields: [senderId], references: [id])
+  receiver    User     @relation("receiver", fields: [receiverId], references: [id])
+  post        Post?    @relation(fields: [postId], references: [id])
+}
+
+// NextAuth Models
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
