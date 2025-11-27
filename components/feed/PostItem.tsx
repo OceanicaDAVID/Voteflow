@@ -77,7 +77,7 @@ export function PostItem({ post, currentUserId }: PostItemProps) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          pollId: post.poll.id,
+          pollId: post.poll!.id,
           optionId
         })
       })
