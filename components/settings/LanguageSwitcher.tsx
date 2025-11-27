@@ -1,10 +1,10 @@
 "use client"
 
-import { useTranslation } from "@/components/providers/LanguageProvider"
+import { useLanguage } from "@/components/providers/LanguageProvider"
 import { languages, Language } from "@/lib/i18n"
 
 export function LanguageSwitcher() {
-  const { language, setLanguage, t } = useTranslation()
+  const { language, setLanguage, t } = useLanguage()
 
   return (
     <div className="space-y-2">
