@@ -69,6 +69,7 @@ export function PostItem({ post, currentUserId }: PostItemProps) {
   const handleVote = async (optionId: string) => {
     if (!currentUserId) return 
     if (userVotedOptionId) return 
+    if (!post.poll) return
     
     setIsVoting(true)
     try {
