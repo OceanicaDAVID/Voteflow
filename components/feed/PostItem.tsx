@@ -48,9 +48,9 @@ export function PostItem({ post, currentUserId }: PostItemProps) {
   const userVotedOptionId = post.poll?.votes?.[0]?.optionId
   const totalVotes = post.poll?.options.reduce((acc: number, opt: PollOption) => acc + opt._count.votes, 0) || 0
   
-  const isLiked = post.likes?.length > 0
+  const isLiked = (post.likes?.length || 0) > 0
   const likesCount = post._count.likes
-  const isFollowed = post.author.followedBy?.length > 0
+  const isFollowed = (post.author.followedBy?.length || 0) > 0
   const isSelf = currentUserId === post.author.id
   const viewsCount = post.views || 0
 
