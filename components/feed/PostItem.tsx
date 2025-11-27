@@ -201,7 +201,7 @@ export function PostItem({ post, currentUserId }: PostItemProps) {
 
       <div className="flex gap-4">
         <Avatar>
-          <AvatarImage src={post.author.image} />
+          <AvatarImage src={post.author.image || undefined} />
           <AvatarFallback>{post.author.name?.[0]}</AvatarFallback>
         </Avatar>
         <div className="flex-1 min-w-0">
