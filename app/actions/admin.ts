@@ -103,7 +103,7 @@ export async function getFlaggedPosts(page = 1) {
     orderBy: { createdAt: 'desc' },
     include: {
       author: { select: { name: true, email: true, image: true } },
-      _count: { select: { likes: true, votes: false } } // votes is not on post directly in schema, check schema
+      _count: { select: { likes: true } }
     }
   })
   
