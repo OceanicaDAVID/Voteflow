@@ -34,14 +34,18 @@ if [ -d "$APP_DIR" ]; then
 else
     echo -e "${GREEN}Cloning repository...${NC}"
     # Replace with your actual repository URL
-    sudo git clone https://github.com/YOUR_GITHUB_USERNAME/voteflow.git "$APP_DIR"
+    sudo git clone https://github.com/OceanicaDAVID/Voteflow.git "$APP_DIR"
     cd "$APP_DIR"
 fi
 
 # 4. Environment Configuration
 if [ ! -f .env ]; then
     echo -e "${GREEN}Creating .env file...${NC}"
-    cp .env.example .env
+    if [ -f .env.example ]; then
+        cp .env.example .env
+    elif [ -f env_template.txt ]; then
+        cp env_template.txt .env
+    fi
     echo "⚠️  PLEASE EDIT .env FILE WITH YOUR REAL CREDENTIALS BEFORE CONTINUING!"
     echo "Nano is opening..."
     read -p "Press Enter to continue"
