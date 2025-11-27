@@ -247,7 +247,7 @@ export function PostItem({ post, currentUserId }: PostItemProps) {
 
           {hasPoll && (
             <div className="mt-3 flex flex-col gap-2">
-              {post.poll.options.map((option: PollOption) => {
+              {post.poll!.options.map((option: PollOption) => {
                 const votes = option._count.votes
                 const percentage = totalVotes > 0 ? Math.round((votes / totalVotes) * 100) : 0
                 const isSelected = userVotedOptionId === option.id
@@ -283,7 +283,7 @@ export function PostItem({ post, currentUserId }: PostItemProps) {
                 )
               })}
               <div className="mt-1 text-xs text-muted-foreground">
-                {totalVotes} votes · {post.poll.expiresAt ? "Ends soon" : "Final results"}
+                {totalVotes} votes · {post.poll!.expiresAt ? "Ends soon" : "Final results"}
               </div>
             </div>
           )}
