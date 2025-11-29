@@ -34,11 +34,11 @@ function cleanupRateLimitMap() {
   lastCleanup = now
   
   // 删除过期记录
-  for (const [ip, record] of rateLimit.entries()) {
+  rateLimit.forEach((record, ip) => {
     if (now - record.startTime > RATE_LIMIT_WINDOW_MS) {
       rateLimit.delete(ip)
     }
-  }
+  })
   
   // 如果记录数仍然过多，删除最旧的一半
   if (rateLimit.size > MAX_ENTRIES) {
