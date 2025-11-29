@@ -14,14 +14,16 @@ services:
   app:
     build: .
     ports:
-      - "3000:3000"
+      - "80:3000"
     environment:
       DATABASE_URL: postgres://postgres:password@db:5432/xvote?schema=public
       NEXTAUTH_SECRET: supersecretkey
-      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_URL: http://voteflow.app
     depends_on:
       - db
-    restart: always
+    # server.js is created by next build from the standalone output
+    command: >
+      sh -c "npx prisma generate && node server.js"
 
 volumes:
   db_data:
