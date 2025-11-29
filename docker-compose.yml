@@ -23,7 +23,7 @@ services:
       - db
     # server.js is created by next build from the standalone output
     command: >
-      sh -c "npx prisma generate && node server.js"
+      sh -c "npx prisma@5.7.1 generate && node server.js"
 
 volumes:
   db_data:
